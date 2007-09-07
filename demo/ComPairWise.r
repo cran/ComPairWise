@@ -1,0 +1,1 @@
+cpw("sample.nex", "sample2.nex", ref=1)

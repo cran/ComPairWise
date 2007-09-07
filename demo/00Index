@@ -1,0 +1,3 @@
+read.nexus	Read a NEXUS alignment
+read.phylip	Read a PHYLIP alignment
+ComPairWise	Compare alternate sequence alignments
