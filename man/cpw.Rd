@@ -88,14 +88,16 @@ A list, returned invisibly if no assignment is being made.  For each comparison 
 \author{Trina E. Roberts, \email{trina.roberts@uaf.edu} }
 
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
 
 #The simplest case: 2 alignments, no options changed:
-#To run this, move the sample files from the package's demo directory to the current working directory, or specify the path to the demo directory (or just run the demo)
+#The example below sets the working directory so it can find the example files
 
-\dontrun{cpw("sample.nex", "sample1.nex")}	
-
+\dontrun{	
+oldwd <- getwd()
+setwd(file.path(.Library, "ComPairWise", "examples"))
+cpw("sample.nex", "sample2.nex")
+setwd(oldwd)
+rm(oldwd)
+}
 }
 \keyword{misc}

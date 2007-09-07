@@ -1,9 +1,8 @@
 \name{read.phylip}
 \alias{read.phylip}
-\title{Read a NEXUS-format character alignment and return it as a matrix}
+\title{Read a PHYLIP-format character alignment}
 \description{
-Reads a sequential (non-interleaved) PHYLIP-format alignment file, and returns it as a matrix with or without the taxon names as row names.  Designed for DNA but should work for anything as long as character states are single characters.
-}
+Reads a PHYLIP-format alignment file and returns it as an alignment object}
 \usage{
 read.phylip(filename)
 }
@@ -32,32 +31,12 @@ For some PHYLIP files the phylip reader in seqinr works better.
 }
 \seealso{\code{\link{check.format}} for automated format checking, \code{\link{read.nexus}} for NEXUS, \code{\link[seqinr]{read.alignment}} for some other formats}
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
 
-\dontrun{read.phylip("sample.phy")		#could run this if the sample file sample.phy were in the current working directory}
-
-## The function is currently defined as
-function (filename) 
-{
-    phy.in <- scan(file = filename, skip = 1, sep = "\n", what = "c", 
-        strip.white = T, multi.line = T, quiet = T)
-    if (length(grep("[[:blank:]]", phy.in)) > 0) {
-        dna.only <- sub("^\\w+( |\t)+", "", phy.in)
-        extr.first <- function(vector) vector[1]
-        taxon.labels <- sapply(strsplit(grep("^\\w+( |\t)+", 
-            phy.in, value = TRUE), split = "[[:blank:]]"), extr.first)
-    }
-    else {
-        dna.only <- substr(phy.in, 11, nchar(phy.in))
-        taxon.labels <- substr(phy.in, 1, 10)
-    }
-    dna.only <- gsub("[[:blank:]]+", "", dna.only)
-    phy.align <- list(nb = length(dna.only), nam = taxon.labels, 
-        seq = dna.only, com = NA)
-    class(phy.align) <- "alignment"
-    return(phy.align)
-  }
-}
+\dontrun{
+oldwd <- getwd()
+setwd(file.path(.Library, "ComPairWise", "examples"))
+read.phylip("sample.phy")
+setwd(oldwd)
+rm(oldwd)
+}}
 \keyword{file}

@@ -1,6 +1,6 @@
 \name{comp.all}
 \alias{comp.all}
-\title{Groupwise comparison of alignment matrices; determine which columns are identical and which aren't.}
+\title{Groupwise comparison of alignment matrices}
 \description{
 comp.all is an internal ComPairWise function.  It compares a group (greater than 2) of matrices all at once, to determine which columns are identical in all matrices and which aren't.
 }

@@ -1,1 +1,5 @@
+oldwd <- getwd()
+setwd(file.path(.Library, "ComPairWise", "examples"))
 cpw("sample.nex", "sample2.nex", ref=1)
+setwd(oldwd)
+rm(oldwd)

@@ -3,7 +3,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Read a NEXUS-format character alignment}
 \description{
-Reads a sequential (non-interleaved) NEXUS-format alignment file, and returns it as an alignment object.
+Reads a NEXUS-format alignment file, and returns it as an alignment object.
 }
 \usage{
 read.nexus(filename)
@@ -49,72 +49,11 @@ May fail unpredictably if square brackets (which should indicate comments) aren'
 }
 \seealso{\code{\link{check.format}} for automatic guessing what the format is, \code{\link{read.phylip}} for phylip files, \code{\link[seqinr]{read.alignment}} for some other formats}
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-\dontrun{nex.aln <- read.nexus("sample.nex")		#could run this if the sample file sample.nex were in the current working directory}
-
-## The function is currently defined as
-function (filename) 
-{
-    nex.in <- scan(file = filename, sep = "\n", what = "c", strip.white = T, 
-        multi.line = F, quiet = T)
-    while (length(grep("\\[[^]\\[]*]", nex.in)) > 0) nex.in <- gsub("\\[[^]\\[]*]", 
-        "", nex.in)
-    comm.start <- grep("\\[", nex.in)
-    comm.end <- grep("]", nex.in)
-    if (length(comm.start) > 0 && length(comm.end) > 0) {
-        for (i in 1:(length(comm.start))) {
-            if (comm.end[i] == comm.start[i] + 1) {
-                nex.in[comm.start[i]] <- gsub("\\[.*$", "", nex.in[comm.start[i]])
-                nex.in[comm.end[i]] <- gsub("^.*]", "", nex.in[comm.end[i]])
-            }
-            else {
-                for (j in (comm.start[i] + 1):(comm.end[i] - 
-                  1)) {
-                  nex.in[j] <- ""
-                }
-                nex.in[comm.start[i]] <- gsub("\\[.*$", "", nex.in[comm.start[i]])
-                nex.in[comm.end[i]] <- gsub("^.*]", "", nex.in[comm.end[i]])
-            }
-        }
-    }
-    nex.in <- gsub("'", "", nex.in)
-    nex.in <- nex.in[grep("^.+$", nex.in)]
-    tax1 <- (grep("matrix", nex.in, ignore.case = T)) + 1
-    semicolons <- grep(";", nex.in, ignore.case = T)
-    taxlast <- semicolons[semicolons > tax1][1] - 1
-    nex.header <- nex.in[1:(grep("matrix", nex.in, ignore.case = T))[1]]
-    format.start <- grep("format", nex.header, ignore.case = T)
-    nex.format <- unlist(strsplit(gsub("=|;", " ", nex.header[format.start:semicolons[semicolons >= 
-        format.start][1]]), split = " "))
-    if ("interleave" \%in\% nex.format) {
-        if (grep("interleave", nex.format) == length(nex.format)) {
-            interleave <- TRUE
-        }
-        else {
-            if (nex.format[grep("interleave", nex.format) + 1] == 
-                "no") 
-                interleave <- FALSE
-            else interleave <- TRUE
-        }
-    }
-    else interleave <- FALSE
-    dna.only <- sub("^[^[:blank:]]+[[:blank:]]+", "", nex.in[tax1:taxlast])
-    dna.only <- gsub("[[:blank:]]+", "", dna.only)
-    extr.first <- function(vector) vector[1]
-    taxon.labels <- sapply(strsplit(grep("^[^[:blank:]]+[[:blank:]]+", 
-        nex.in[tax1:taxlast], value = TRUE), split = "[[:blank:]]"), 
-        extr.first)
-    nex.align <- list(nb = length(dna.only), nam = taxon.labels, 
-        seq = dna.only, com = NA)
-    class(nex.align) <- "alignment"
-    if ("matchchar" \%in\% nex.format) 
-        nex.align <- dots.to.bases(nex.align, matchchar = nex.format[grep("matchchar", 
-            nex.format, ignore.case = T)[1] + 1])
-    if (interleave) 
-        nex.align <- deinterleave(nex.align)
-    return(nex.align)
-  }
-}
+\dontrun{
+oldwd <- getwd()
+setwd(file.path(.Library, "ComPairWise", "examples"))
+nex.aln <- read.nexus("sample.nex")		
+setwd(oldwd)
+rm(oldwd)
+}}
 \keyword{file}

@@ -12,8 +12,8 @@ ComPairWise compares alternate alignments of a single DNA/RNA data set, and dete
 \tabular{ll}{
 Package: \tab ComPairWise\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2007-09-07\cr
+Version: \tab 1.01\cr
+Date: \tab 2007-10-07\cr
 License: \tab GNU GPL 2.0 or greater\cr
 }
 Contents:
@@ -39,16 +39,30 @@ Roberts, T.E. and L.E. Olson.  ComPairWise...
 \examples{
 
 #The simplest case: 2 alignments, no options changed:
-#To run this, move the sample files from the package's data directory to the current working directory, or specify the path to the data directory
-\dontrun{cpw("sample.nex", "sample1.nex")}
-
-
+\dontrun{
+oldwd <- getwd()
+setwd(file.path(.Library, "ComPairWise", "examples"))
+cpw("sample.nex", "sample2.nex")
+setwd(oldwd)
+rm(oldwd)
+}
 
 #other functions
-#To run these, move the sample files from the package's data directory to the current working directory, or specify the path to the data directory
-\dontrun{nex.aln <- read.nexus("sample.nex")}
+\dontrun{
+oldwd <- getwd()
+setwd(file.path(.Library, "ComPairWise", "examples"))
+nex.aln <- read.nexus("sample.nex")
+setwd(oldwd)
+rm(oldwd)
+}
 
-\dontrun{phy.aln <- read.phylip("sample.phy")}
+\dontrun{
+oldwd <- getwd()
+setwd(file.path(.Library, "ComPairWise", "examples"))
+phy.aln <- read.phylip("sample.phy")
+setwd(oldwd)
+rm(oldwd)
+}
 
 data(sample.aln)
 aln1.mat <- aln.to.matrix(sample.aln)

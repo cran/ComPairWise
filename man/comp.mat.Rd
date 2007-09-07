@@ -1,6 +1,6 @@
 \name{comp.mat}
 \alias{comp.mat}
-\title{Pairwise comparison of alignment matrices; determine which columns are identical and which aren't.}
+\title{Pairwise comparison of alignment matrices}
 \description{
 Internal ComPairWise function.  Probably not useful as a standalone.
 }
